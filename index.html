@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PokéMatch Memory Game</title>
+    <!-- Main app font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="index.js" defer></script>
+  </head>
+
+  <body>
+    <div class="app-container">
+      <header>
+        <h1>PokéMatch</h1>
+        <div class="controls">
+          <button id="start-btn" class="btn btn-green">Start</button>
+          <button id="reset-btn" class="btn btn-blue">Reset</button>
+          <button id="hint-btn" class="btn btn-purple" style="display: none">
+            Power-up!
+          </button>
+          <button id="diff-btn" class="btn btn-red">Hard</button>
+          <button id="theme-btn" class="btn btn-theme">Dark Mode</button>
+        </div>
+      </header>
+
+      <!-- NEW: Status Board -->
+      <div class="status-board">
+        <div class="stat">👆 Clicks: <span id="clicks">0</span></div>
+        <div class="stat">⚡ Power-ups: <span id="power-ups">0</span></div>
+        <div class="stat">⏱️ Time: <span id="timer">0</span>s</div>
+        <div class="stat">🃏 Total Pairs: <span id="total">0</span></div>
+        <div class="stat">✅ Matched: <span id="matched">0</span></div>
+        <div class="stat">❌ Left: <span id="left">0</span></div>
+      </div>
+
+      <main>
+        <div
+          id="loading"
+          style="display: none; text-align: center; font-weight: bold"
+        >
+          Catching Pokémon...
+        </div>
+        <div id="game_grid">
+          <!-- Cards injected here -->
+        </div>
+      </main>
+    </div>
+
+    <!-- NEW: Win / Loss Overlay -->
+    <div id="message-overlay" class="hidden">
+      <h2 id="message-text"></h2>
+      <button id="close-msg-btn" class="btn btn-blue">Close</button>
+    </div>
+  </body>
+</html>

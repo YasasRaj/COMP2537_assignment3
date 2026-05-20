@@ -1,0 +1,341 @@
+/* --- Font Setup --- */
+@font-face {
+  font-family: "Pokemon Solid";
+  src: url("Pokemon Solid.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  /* Light Mode Palette */
+  --bg-color: #e0eaf5;
+  --text-color: #333333;
+  --glass-bg: rgba(255, 255, 255, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --glass-shadow: 0 4px 15px 0 rgba(31, 38, 135, 0.15);
+  --theme-btn-bg: #000000;
+  --theme-btn-text: #ffffff;
+}
+
+body.dark-mode {
+  /* Dark Mode Palette */
+  --bg-color: #121212;
+  --text-color: #e0e0e0;
+  --glass-bg: rgba(30, 30, 40, 0.5);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.5);
+  --theme-btn-bg: #ffffff;
+  --theme-btn-text: #000000;
+}
+
+/* --- Global Reset for Responsive Fit --- */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh; /* Lock to viewport height */
+  overflow: hidden; /* Prevent all scrolling */
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
+}
+
+/* --- Layout Container --- */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Fill height */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1vh 2vw 2vh 2vw; /* Reduced top space, responsive padding */
+  box-sizing: border-box;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 1.5vh;
+  flex-shrink: 0; /* Prevent squishing */
+}
+
+/* Title Styling */
+h1 {
+  font-family: "Pokemon Solid", sans-serif;
+  margin: 0 0 1vh 0; /* Removed top margin entirely */
+  font-size: clamp(2rem, 6vh, 4rem); /* Dynamically scales with height */
+  letter-spacing: 3px;
+  line-height: 1.1;
+  color: #ffcb05;
+  -webkit-text-stroke: min(3px, 0.3vw) #3b4cca; /* Responsive stroke */
+  text-shadow: 3px 3px 0px #2a3a8a;
+}
+
+body.dark-mode h1 {
+  text-shadow:
+    3px 3px 0px #1a2266,
+    0 0 15px rgba(255, 203, 5, 0.25);
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 1vw;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.btn {
+  padding: 1vh 2vw;
+  border: none;
+  border-radius: 25px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: clamp(12px, 1.8vh, 16px);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: white;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-green {
+  background-color: #4caf50;
+}
+.btn-blue {
+  background-color: #2196f3;
+}
+.btn-yellow {
+  background-color: #ffc107;
+  color: #333;
+}
+.btn-orange {
+  background-color: #ff9800;
+}
+.btn-red {
+  background-color: #f44336;
+}
+.btn-theme {
+  background-color: var(--theme-btn-bg);
+  color: var(--theme-btn-text);
+}
+
+/* Status Board */
+.status-board {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 1vmin;
+  margin-bottom: 2vh;
+  padding: 1vh 2vw;
+  flex-shrink: 0;
+
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 15px;
+  box-shadow: var(--glass-shadow);
+}
+
+.stat {
+  font-size: clamp(12px, 2vh, 16px);
+  font-weight: 600;
+}
+
+/* --- Game Grid Area --- */
+main {
+  flex: 1; /* Takes up ALL remaining vertical space */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 0; /* Crucial: allows grid to shrink safely */
+  width: 100%;
+}
+
+#game_grid {
+  display: grid;
+  gap: 1.5vmin; /* Responsive gap */
+  padding: 2vmin;
+  width: 100%;
+  height: 100%; /* Fill the flex container perfectly */
+  box-sizing: border-box;
+
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: var(--glass-shadow);
+}
+
+/* 
+  ====== LANDSCAPE GRID (Default) ====== 
+  Forces grid fractions (1fr) so cells scale mathematically 
+*/
+#game_grid[data-difficulty="easy"] {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+#game_grid[data-difficulty="medium"] {
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+#game_grid[data-difficulty="hard"] {
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+}
+
+/* 
+  ====== PORTRAIT GRID ====== 
+  Inverts columns and rows automatically if window is taller than it is wide.
+*/
+@media (orientation: portrait) {
+  #game_grid[data-difficulty="easy"] {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+  }
+  #game_grid[data-difficulty="medium"] {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+  #game_grid[data-difficulty="hard"] {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+  }
+}
+
+/* --- Adaptive Square Cards --- */
+.card {
+  position: relative;
+  width: 100%; /* Takes full width of grid cell */
+  height: 100%; /* Takes full height of grid cell */
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease-in-out;
+  cursor: pointer;
+}
+.card.flip {
+  transform: rotateY(180deg);
+}
+
+.front_face,
+.back_face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: clamp(8px, 2vmin, 15px); /* Responsive corners */
+  object-fit: contain; /* Prevents pokemon stretching inside squarish cards */
+  background: var(--glass-bg);
+  backdrop-filter: blur(5px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 1vmin;
+  box-sizing: border-box;
+}
+.front_face {
+  transform: rotateY(180deg);
+  background-color: rgba(255, 255, 255, 0.25);
+}
+.back_face {
+  background-image: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+}
+body.dark-mode .back_face {
+  background-image: linear-gradient(135deg, #434343 0%, #000000 100%);
+}
+
+/* Message Overlay */
+#message-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+#message-overlay.hidden {
+  display: none;
+}
+#message-text {
+  font-size: clamp(2rem, 8vmin, 4rem);
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  font-family: "Pokemon Solid", sans-serif;
+  letter-spacing: 2px;
+  -webkit-text-stroke: 1px #000;
+}
+
+/* --- Hint Button Color --- */
+.btn-purple {
+  background-color: #9c27b0;
+}
+
+/* --- Smooth Fading --- */
+.front_face,
+.back_face {
+  transition: opacity 0.5s ease; /* Enables the back face to fade out smoothly */
+}
+
+/* --- Hint Mode Active State --- */
+.card.hint-active {
+  background-image: url("wtp.gif");
+  background-size: cover;
+  background-position: center;
+  border-radius: clamp(8px, 2vmin, 15px);
+  /* Fades out the edges of the wtp.gif */
+  box-shadow: inset 0 0 20px 10px rgba(0, 0, 0, 0.6);
+}
+
+/* Fade out the back card image */
+.card.hint-active .back_face {
+  opacity: 0;
+}
+
+/* --- Updated Hint Mode Logic --- */
+.card.hint-active .front_face {
+  /* Reset the flip rotation to show the image */
+  transform: rotateY(0deg);
+
+  /* 1. Make the image a solid black silhouette */
+  /* We use a black filter combined with a mask to preserve transparency */
+  filter: brightness(0);
+
+  /* 2. This is the magic: It uses the image's own alpha channel as a mask */
+  -webkit-mask-image: url(""); /* Placeholder, JS will inject the actual src */
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+
+  /* 3. Ensure the dynamic gradient doesn't show through the silhouette */
+  background: black !important;
+
+  animation: hintFadeIn 0.5s forwards;
+}
+
+@keyframes hintFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
