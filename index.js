@@ -240,6 +240,9 @@ $(document).ready(() => {
       $("#hint-btn").hide();
     }
 
+    firstCard = undefined;
+    secondCard = undefined;
+
     // Start Timer
     clearInterval(timerInterval);
     timerInterval = setInterval(() => {
