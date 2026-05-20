@@ -194,6 +194,7 @@ async function setup(difficulty) {
         if (pairsMatched === totalPairs) {
           endGame();
           showMessage("You Win! 🎉");
+          $("#start-btn").prop("disabled", true);
         }
       } else {
         setTimeout(() => {
@@ -225,7 +226,16 @@ $(document).ready(() => {
     gameRunning = true;
     $(this).prop("disabled", true);
     $("#diff-btn").hide();
-    if (powerUpsLeft > 0) $("#hint-btn").show(); // Only show if user has power-ups
+
+    // 1. Reset button state entirely
+    $("#hint-btn").prop("disabled", false);
+
+    // 2. Check if we should show it
+    if (powerUpsLeft > 0) {
+      $("#hint-btn").show();
+    } else {
+      $("#hint-btn").hide();
+    }
 
     // Start Timer
     clearInterval(timerInterval);
@@ -237,6 +247,7 @@ $(document).ready(() => {
       if (timeLeft <= 0) {
         endGame();
         showMessage("Time's Up! You Lose ⏰");
+        $("#start-btn").prop("disabled", true);
         $("#hint-btn").hide(); // Hide hint
       }
     }, 1000);
@@ -247,6 +258,7 @@ $(document).ready(() => {
     endGame();
     setup(currentDifficulty);
     $("#hint-btn").hide(); // Hide hint button on reset
+    $("#start-btn").prop("disabled", false);
   });
 
   // HINT Button Logic
@@ -283,7 +295,7 @@ $(document).ready(() => {
         isProcessing = false;
         // Re-enable button only if we still have power-ups left
         if (powerUpsLeft > 0) btn.prop("disabled", false);
-        else btn.hide();
+        else btn.prop("disabled", true);
       }, 500);
     }, 2000);
   });
