@@ -150,7 +150,7 @@ async function setup(difficulty) {
     } else {
       // Single type: Solid color background
       const color1 = TYPE_COLORS[types[0]] || "#ffffff";
-      frontImg.style.background = color1;
+      frontImg.style.background = `linear-gradient(to bottom left, color-mix(in srgb, ${color1} 80%, white), color-mix(in srgb, ${color1} 80%, black))`;
     }
 
     const backImg = document.createElement("img");
@@ -193,7 +193,10 @@ async function setup(difficulty) {
 
         if (pairsMatched === totalPairs) {
           endGame();
-          showMessage("You Win! 🎉");
+          showMessage(
+            "You Win! 🎉\nScore: " +
+              Math.floor((timeLeft * 1000) / Math.max(clicks, 1)),
+          );
           $("#start-btn").prop("disabled", true);
         }
       } else {
